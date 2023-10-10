@@ -1,38 +1,94 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.main-container {
+  background-color: #F4F5F8;
   min-height: 100vh;
+  height: auto;
+  font-size: 13px;
+}
+
+
+/* header CSS */
+.header-container {
+  height: 50px;
   display: flex;
-  flex-direction: column;
+  padding: 0 20px;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #ffffff;
+}
+.dropbtn{
+  display: flex;
+  font-size: 14px;
+  background-color: white;
+  border-radius: 6px;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px;
+  padding: 4px;
 }
 
-.App-link {
-  color: #61dafb;
+.dropdown {
+  position: relative;
+  display: inline-block;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(249, 248, 248);
+  min-width: 200px;
+  padding: 0 10px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content select{
+  font-size: 12px;
+  min-width: 100px;
+  padding: 1px;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.material-symbols-outlined{
+  font-size: 14px;
+  margin: 0 5px;
+}
+.select-button{
+  font-size: 14px;
+  background-color: white;
+  border-radius: 6px;
+}
+.grouping {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.grouping p {
+  padding: 0 10px;
+  color: rgb(112, 111, 111);
+}
+.ordering{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ordering p{
+  padding: 0 10px;
+  color: rgb(112, 111, 111);
+}
+
+/* Kanban */
+.container {
+  scroll-behavior: smooth;
+overflow: scroll;
+width: 100vw;
+}
+
+.inner-div {
+  display: inline-block;
+  width: 400px; /* Set the width of each inner div */
+  height: 100px;
+  margin-right: 10px; /* Add some space between the divs */
 }
