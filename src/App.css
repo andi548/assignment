@@ -81,9 +81,7 @@
 
 /* Kanban */
 .container {
-  scroll-behavior: smooth;
-overflow: scroll;
-width: 100vw;
+display: flex;
 }
 
 .inner-div {
