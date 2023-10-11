@@ -1,11 +1,9 @@
 import './App.css';
-import Kanban from './Kanban/Kanban';
-
+import Headers from './Header/Header'
 function App() {
   return (
     <div className='main-container'>
-   
-    <Kanban/>
+    <Headers />
     </div>
   );
 }
