@@ -48,7 +48,11 @@ const Kanban = ({ tickets,users, groupingOption, sortingOption }) => {
       let groupName;
       if (groupingOption === 'userId') {
         groupName = getUserById(group.groupName).name;
-        console.log("we are here")
+        
+      } else if (groupingOption === 'priority') {
+        console.log(group)
+        groupName = getPriorityString(group.tickets[0].priority);
+        
       } else {
         groupName = group.groupName;
         console.log(group)
@@ -100,20 +104,34 @@ const Kanban = ({ tickets,users, groupingOption, sortingOption }) => {
             <div className="kanban-grouping">
               {sortedData.map((group) => (
                 <div key={group.groupName}>
-                  <h2>{group.groupName}</h2>
+                  <div className="group-heading">
+                    <div>
+                      <h4>{group.groupName} &nbsp; &nbsp;{group.tickets.length}</h4>
+                      
+                    </div>
+                    <div>
+                      <span class="material-symbols-outlined">add</span>
+                      <span class="material-symbols-outlined">more_horiz</span>
+                    </div>
+                  </div>
+
                   {group.tickets.map((ticket) => (
                     <div className="inner-div" key={ticket.id}>
-                    <Card id={ticket.id} title={ticket.title} status={ticket.status} tag={ticket.tag[0]} user={getUserById(ticket.userId).name}/>
+                      <Card
+                        id={ticket.id}
+                        title={ticket.title}
+                        status={ticket.status}
+                        tag={ticket.tag[0]}
+                        user={getUserById(ticket.userId).name}
+                      />
                     </div>
                   ))}
                 </div>
               ))}
             </div>
           </div>
-         
         </div>
       </section>
-    
     </>
   );
 }
