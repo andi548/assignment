@@ -13,7 +13,7 @@ const Header = () => {
       .then(response => response.json())
       .then(data => {setTickets(data.tickets)
       console.log(data.users)
-    setUser(data.users)}
+      setUser(data.users)}
       );
      
   }, []);
@@ -57,7 +57,7 @@ const Header = () => {
       </div>
     </section>
     <Kanban tickets={tickets}
-    users = {user}
+        users = {user}
         groupingOption={groupingOption}
         sortingOption={sortingOption}
  />

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../Card/Card'
-const Kanban = ({ tickets,user, groupingOption, sortingOption }) => {
+const Kanban = ({ tickets,users, groupingOption, sortingOption }) => {
   if(groupingOption === null){
-    groupingOption = "priority"
+    groupingOption = "status"
+    console.log(tickets)
+    console.log(users)
   }
   if(sortingOption === null){
     sortingOption = "priority"
@@ -27,17 +29,43 @@ const Kanban = ({ tickets,user, groupingOption, sortingOption }) => {
     }));
   }
 
+  // const sortGroupedData = (data, option) => {
+    
+  //   return data.map(group => ({
+  //     groupName: group.groupName,
+  //     tickets: group.tickets.slice().sort((a, b) => {
+  //       if (option === 'title') {
+  //         return a.title.localeCompare(b.title);
+  //       } else {
+  //         return a[option] - b[option];
+  //       }
+  //     })
+  //   }));
+  // }
+
   const sortGroupedData = (data, option) => {
-    return data.map(group => ({
-      groupName: group.groupName,
-      tickets: group.tickets.slice().sort((a, b) => {
-        if (option === 'title') {
-          return a.title.localeCompare(b.title);
-        } else {
-          return a[option] - b[option];
-        }
-      })
-    }));
+    return data.map(group => {
+      let groupName;
+      if (groupingOption === 'userId') {
+        groupName = getUserById(group.groupName).name;
+        console.log("we are here")
+      } else {
+        groupName = group.groupName;
+        console.log(group)
+        console.log(option)
+      }
+  
+      return {
+        groupName: groupName,
+        tickets: group.tickets.slice().sort((a, b) => {
+          if (option === 'title') {
+            return a.title.localeCompare(b.title);
+          } else {
+            return a[option] - b[option];
+          }
+        })
+      };
+    });
   }
 
   function getPriorityString(priority) {
@@ -56,35 +84,36 @@ const Kanban = ({ tickets,user, groupingOption, sortingOption }) => {
         return "Unknown";
     }
   }
+
+  const getUserById = (userId) => {
+    return users.find(u => u.id === userId);
+  }
+
   const groupedData = groupTickets(groupingOption );
   const sortedData = sortGroupedData(groupedData, sortingOption);
 
   return (
     <>
-      <div className="container">
-        <div className="inner-div">
-          {" "}
-          <section>
-            {}
-            <div>{groupingOption}</div>
-            <div> {sortingOption}</div>
-            <div className='kanban-grouping'>
-            {sortedData.map((group) => (
-              <div key={group.groupName}>
-                <h2>{group.groupName}</h2>
-                {group.tickets.map((ticket) => (
-                  <div className='inner-div' key={ticket.id}>
-                    <p>Title: {ticket.title}</p>
-                    <p>Status: {ticket.status}</p>
-                    <p>Priority: {getPriorityString(ticket.priority)}</p>
-                  </div>
-                ))}
-              </div>
-            ))}
+      <section>
+        <div className="container">
+          <div className="inner-div">
+            <div className="kanban-grouping">
+              {sortedData.map((group) => (
+                <div key={group.groupName}>
+                  <h2>{group.groupName}</h2>
+                  {group.tickets.map((ticket) => (
+                    <div className="inner-div" key={ticket.id}>
+                    <Card id={ticket.id} title={ticket.title} status={ticket.status} tag={ticket.tag[0]} user={getUserById(ticket.userId).name}/>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
-          </section>
+          </div>
+         
         </div>
-      </div>
+      </section>
+    
     </>
   );
 }

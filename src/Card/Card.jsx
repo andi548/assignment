@@ -1,14 +1,24 @@
 import React from 'react'
 
-const Card = () => {
+const Card = ({id, title, status, tag, user}) => {
+  const color = () => {
+    const randomColor = `rgb(${Math.floor(Math.random() * 100) + 155}, ${Math.floor(Math.random() * 100) + 155}, ${Math.floor(Math.random() * 100) + 155})`;
+    return randomColor;
+  };
   return (
     <div className="card-container">
-      <div>
-        <h5>CAM 11</h5>
-        <h6> Conduct security Vulnability</h6>
-        <span class="material-symbols-outlined">error</span>
-        tags
+      <div className="card-heading">
+        <p className="card-id">{id}</p>
+        <p className="card-name" style={{ backgroundColor: color() }}>
+          {user[0]}
+        </p>
       </div>
+
+      <p className="card-title"> {title}</p>
+      <p className="card-tag">
+        <span class="material-symbols-outlined">report</span>
+        <p>{tag}</p>
+      </p>
     </div>
   );
 }
