@@ -15,10 +15,10 @@ const Card = ({id, title, tag, user}) => {
       </div>
 
       <p className="card-title"> {title}</p>
-      <p className="card-tag">
+      <div className="card-tag">
         <span className="material-symbols-outlined">report</span>
-        {tag}
-      </p>
+        <p>{tag}</p>
+      </div>
     </div>
   );
 }
