@@ -1,47 +1,51 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Card from '../Card/Card'
 const Kanban = ({ tickets,users, groupingOption, sortingOption }) => {
-  if(groupingOption === null){
-    groupingOption = "status"
-    console.log(tickets)
-    console.log(users)
+
+  if (groupingOption === null) {
+    const savedGroupingOption = localStorage.getItem('groupingOption');
+    if (savedGroupingOption) {
+      groupingOption = savedGroupingOption
+    } else {
+      groupingOption="status"; 
+    }
   }
-  if(sortingOption === null){
-    sortingOption = "priority"
+
+  if (sortingOption === null) {
+    const savedSortingOption = localStorage.getItem('sortingOption');
+    if (savedSortingOption) {
+      sortingOption = savedSortingOption;
+    } else {
+      sortingOption="priority"; 
+    }
   }
 
   const groupTickets = (option) => {
-    
     const grouped = {};
-
-    tickets.forEach(ticket => {
-      const groupBy = ticket[option];
-
-      if (!grouped[groupBy]) {
-        grouped[groupBy] = [];
+    if (option === "priority") {
+      for (let i = 4; i >= 1; i--) {
+        const priorityTickets = tickets.filter(
+          (ticket) => ticket.priority === i
+        );
+        if (priorityTickets.length > 0) {
+          grouped[`Priority ${i}`] = priorityTickets;
+        }
       }
-      grouped[groupBy].push(ticket);
-    });
+    } else {
+      tickets.forEach((ticket) => {
+        const groupBy = ticket[option];
+        if (!grouped[groupBy]) {
+          grouped[groupBy] = [];
+        }
+        grouped[groupBy].push(ticket);
+      });
+    }
 
-    return Object.keys(grouped).map(group => ({
+    return Object.keys(grouped).map((group) => ({
       groupName: group,
-      tickets: grouped[group]
+      tickets: grouped[group],
     }));
-  }
-
-  // const sortGroupedData = (data, option) => {
-    
-  //   return data.map(group => ({
-  //     groupName: group.groupName,
-  //     tickets: group.tickets.slice().sort((a, b) => {
-  //       if (option === 'title') {
-  //         return a.title.localeCompare(b.title);
-  //       } else {
-  //         return a[option] - b[option];
-  //       }
-  //     })
-  //   }));
-  // }
+  };
 
   const sortGroupedData = (data, option) => {
     return data.map(group => {
@@ -50,13 +54,10 @@ const Kanban = ({ tickets,users, groupingOption, sortingOption }) => {
         groupName = getUserById(group.groupName).name;
         
       } else if (groupingOption === 'priority') {
-        console.log(group)
         groupName = getPriorityString(group.tickets[0].priority);
-        
+       
       } else {
         groupName = group.groupName;
-        console.log(group)
-        console.log(option)
       }
   
       return {
@@ -65,7 +66,7 @@ const Kanban = ({ tickets,users, groupingOption, sortingOption }) => {
           if (option === 'title') {
             return a.title.localeCompare(b.title);
           } else {
-            return a[option] - b[option];
+            return b[option] - a[option];
           }
         })
       };
@@ -107,21 +108,19 @@ const Kanban = ({ tickets,users, groupingOption, sortingOption }) => {
                   <div className="group-heading">
                     <div>
                       <h4>{group.groupName} &nbsp; &nbsp;{group.tickets.length}</h4>
-                      
                     </div>
                     <div>
-                      <span class="material-symbols-outlined">add</span>
-                      <span class="material-symbols-outlined">more_horiz</span>
+                      <span className="material-symbols-outlined">add</span>
+                      <span className="material-symbols-outlined">more_horiz</span>
                     </div>
                   </div>
-
                   {group.tickets.map((ticket) => (
                     <div className="inner-div" key={ticket.id}>
                       <Card
                         id={ticket.id}
                         title={ticket.title}
                         status={ticket.status}
-                        tag={ticket.tag[0]}
+                        tag={ticket.tag[0]}               
                         user={getUserById(ticket.userId).name}
                       />
                     </div>

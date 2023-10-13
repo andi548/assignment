@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({id, title, status, tag, user}) => {
+const Card = ({id, title, tag, user}) => {
   const color = () => {
     const randomColor = `rgb(${Math.floor(Math.random() * 100) + 155}, ${Math.floor(Math.random() * 100) + 155}, ${Math.floor(Math.random() * 100) + 155})`;
     return randomColor;
@@ -16,8 +16,8 @@ const Card = ({id, title, status, tag, user}) => {
 
       <p className="card-title"> {title}</p>
       <p className="card-tag">
-        <span class="material-symbols-outlined">report</span>
-        <p>{tag}</p>
+        <span className="material-symbols-outlined">report</span>
+        {tag}
       </p>
     </div>
   );

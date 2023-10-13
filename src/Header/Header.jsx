@@ -8,23 +8,20 @@ const Header = () => {
   const [sortingOption, setSortingOption] = useState(null);
 
   useEffect(() => {
-    // Fetch data from the API
     fetch('https://api.quicksell.co/v1/internal/frontend-assignment')
       .then(response => response.json())
       .then(data => {setTickets(data.tickets)
-      console.log(data.users)
       setUser(data.users)}
-      );
-     
+      );  
   }, []);
 
   const handleGroupingChange = (option) => {
     setGroupingOption(option);
-    console.log(tickets.tickets)
+    localStorage.setItem('groupingOption', option); 
   };
-
   const handleSortingChange = (option) => {
     setSortingOption(option);
+    localStorage.setItem('sortingOption', option); 
   };
   return (
     <>
@@ -33,7 +30,7 @@ const Header = () => {
         <button className="dropbtn">
           <span className="material-symbols-outlined">tune</span>
           Display
-          <span class="material-symbols-outlined">expand_more</span>
+          <span className="material-symbols-outlined">expand_more</span>
         </button>
         <div className="dropdown-content">
           <div className='grouping'>
@@ -44,10 +41,8 @@ const Header = () => {
               <option value="priority">Priority</option>
             </select>
           </div>
-
           <div className='ordering'>
-          <p> Ordering</p>
-           
+          <p> Ordering</p> 
             <select className='select-button' onChange={(e) => handleSortingChange(e.target.value)} name="order" id="order">
               <option value="priority">Priority</option>
               <option value="title">Title</option>
@@ -59,8 +54,7 @@ const Header = () => {
     <Kanban tickets={tickets}
         users = {user}
         groupingOption={groupingOption}
-        sortingOption={sortingOption}
- />
+        sortingOption={sortingOption}/>
     </>
   );
 }
